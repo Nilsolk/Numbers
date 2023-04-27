@@ -1,13 +1,13 @@
 import java.io.IOException;
 import java.util.Random;
 
-public class GetMessage implements Connector {
+public class SendingRequest implements RequestGenerator {
     private final Random random = new Random();
     private final String url = "http://numbersapi.com/" + random.nextInt() + "/trivia";
 
     @Override
-    public String generateNumberRequest() {
-        ConnectionService.Request request = new ConnectionService.Request();
+    public String generateRequest() {
+        Request request = new Request();
         String message;
         try {
             message = url + "\n" + request.connect(url);
@@ -18,8 +18,8 @@ public class GetMessage implements Connector {
     }
 }
 
-interface Connector {
-    String generateNumberRequest();
+interface RequestGenerator {
+    String generateRequest();
 }
 
 
