@@ -8,9 +8,9 @@ public class GetMessage implements Connector {
     @Override
     public String generateNumberRequest() {
         ConnectionService.Request request = new ConnectionService.Request();
-        String message = "";
+        String message;
         try {
-            message = request.connect(url);
+            message = url + "\n" + request.connect(url);
         } catch (IOException e) {
             message = "Something went wrong " + e.getMessage();
         }

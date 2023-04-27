@@ -12,13 +12,18 @@ interface Result {
 
         @Override
         public void countOfSymbols() {
-            InfoAboutMessage.Base infoAboutMessage = new InfoAboutMessage.Base(result);
-            HashMap<Character, Long> hashMap = infoAboutMessage.getInfo();
-            String uniqueValuesString = String.valueOf(toUniqueValues(result));
+            if (result.contains("numbersapi.com")) {
+                String[] arrOfInformation = result.split("\n");
+                String message = arrOfInformation[1];
 
-            for (int i = 0; i < uniqueValuesString.length(); i++) {
-                Character chr = uniqueValuesString.charAt(i);
-                System.out.println(chr + " : " + hashMap.get(chr));
+                InfoAboutMessage.Base infoAboutMessage = new InfoAboutMessage.Base(message);
+                HashMap<Character, Long> hashMap = infoAboutMessage.getInfo();
+                String uniqueValuesString = String.valueOf(toUniqueValues(message));
+
+                for (int i = 0; i < uniqueValuesString.length(); i++) {
+                    Character chr = uniqueValuesString.charAt(i);
+                    System.out.println(chr + " : " + hashMap.get(chr));
+                }
             }
         }
 
@@ -32,6 +37,7 @@ interface Result {
             }
             return builder;
         }
+
 
         @Override
         public void getMessage() {
