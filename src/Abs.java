@@ -1,5 +1,4 @@
 import java.nio.charset.StandardCharsets;
-import java.util.Arrays;
 import java.util.HashMap;
 
 public class Abs implements Computations {
@@ -44,10 +43,18 @@ public class Abs implements Computations {
             String chr = String.valueOf(string.charAt(i));
             byte[] bytes = chr.getBytes(StandardCharsets.UTF_8);
 
-            String utfString = chr + "(" + Arrays.toString(bytes) + ") ";
+            String utfString = chr + "(" + fromArrayToSting(bytes) + ") ";
             stringBuilder.append(utfString);
         }
         return String.valueOf(stringBuilder);
+    }
+
+    private String fromArrayToSting(byte[] bytes) {
+        StringBuilder str = new StringBuilder();
+        for (byte b : bytes) {
+            str.append(b);
+        }
+        return str.toString();
     }
 }
 
