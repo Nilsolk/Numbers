@@ -3,5 +3,6 @@ public class Main {
         GenerateMessage generate = new GenerateMessage();
         generate.getMessage();
         generate.countOfSymbols();
+        generate.getAbs();
     }
 }

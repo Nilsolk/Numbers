@@ -10,11 +10,15 @@ public class SendingRequest implements RequestGenerator {
         Request request = new Request();
         String message;
         try {
-            message = url + "\n" + request.connect(url);
+            message = request.connect(url);
         } catch (IOException e) {
             message = "Something went wrong " + e.getMessage();
         }
         return message;
+    }
+
+    public String getUrl() {
+        return url;
     }
 }
 
