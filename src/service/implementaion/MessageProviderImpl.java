@@ -12,10 +12,10 @@ import java.util.HashMap;
 public class MessageProviderImpl implements MessageProvider {
     private final CharactersMapUtils mapUtils = new CharactersMapUtils();
     private final UniqueValuesUtils valuesUtils = new UniqueValuesUtils();
-    private final RequestProvider result = new RequestProviderImpl();
-    private final String str = result.provideRequest();
-    private final HashMap<Character, Long> hashMap = mapUtils.getCharactersMap(str);
-    private final String unique = valuesUtils.toUniqueValues(str);
+    private final RequestProvider requestProvider = new RequestProviderImpl();
+    private final String result = requestProvider.provideRequest();
+    private final HashMap<Character, Long> hashMap = mapUtils.getCharactersMap(result);
+    private final String unique = valuesUtils.toUniqueValues(result);
     private final AverageServiceImpl averageService = new AverageServiceImpl(hashMap, unique);
 
     @Override
@@ -26,16 +26,20 @@ public class MessageProviderImpl implements MessageProvider {
 
     @Override
     public String getMessage() {
-        return result.provideUrl() + "\n" + result.provideRequest() + "\n";
+        return "link: " + requestProvider.provideUrl() + "\n" + "Message: " + result + "\n";
     }
 
     @Override
     public String getAverage() {
-        return averageService.getAverage() + "\n";
+        return "Average = " + averageService.getAverage() + "\n";
     }
 
     @Override
     public String getAverageCharacters() {
-        return averageService.stringOfAverageSymbols(averageService.getAverage()) + "\n";
+        String str = averageService.stringOfAverageSymbols(averageService.getAverage());
+        if (str.isEmpty()) {
+            str = averageService.stringOfAverageSymbols(averageService.getAverage() + 1);
+        }
+        return "Characters: " + str + "\n";
     }
 }
