@@ -1,8 +1,8 @@
+import service.implementaion.PrintServiceImpl;
+
 public class Main {
     public static void main(String[] args) {
-        GenerateMessage generate = new GenerateMessage();
-        generate.getMessage();
-        generate.countOfSymbols();
-        generate.getAbs();
+        PrintServiceImpl printService = new PrintServiceImpl();
+        printService.print();
     }
 }
