@@ -2,6 +2,7 @@ package service.implementaion;
 
 import service.MessageProvider;
 import service.RequestProvider;
+import service.text_service.AverageService;
 import service.text_service.text_service_implementation.AverageServiceImpl;
 import service.text_service.text_service_implementation.CountServiceImpl;
 import utils.CharactersMapUtils;
@@ -16,7 +17,7 @@ public class MessageProviderImpl implements MessageProvider {
     private final String result = requestProvider.provideRequest();
     private final HashMap<Character, Long> hashMap = mapUtils.getCharactersMap(result);
     private final String unique = valuesUtils.toUniqueValues(result);
-    private final AverageServiceImpl averageService = new AverageServiceImpl(hashMap, unique);
+    private final AverageService averageService = new AverageServiceImpl(hashMap, unique);
 
     @Override
     public String countOfSymbols() {

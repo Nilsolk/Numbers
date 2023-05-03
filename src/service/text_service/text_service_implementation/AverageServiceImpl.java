@@ -4,6 +4,7 @@ import service.text_service.AverageService;
 
 import java.nio.charset.StandardCharsets;
 import java.util.HashMap;
+import java.util.stream.IntStream;
 
 public class AverageServiceImpl implements AverageService {
     private final HashMap<Character, Long> hashMapOfSymbols;
@@ -16,38 +17,33 @@ public class AverageServiceImpl implements AverageService {
 
     @Override
     public float getAverage() {
-        int sum = 0;
-        for (int i = 0; i < uniqueCharactersString.length(); i++) {
-            char value = uniqueCharactersString.charAt(i);
-            sum += hashMapOfSymbols.get(value);
-        }
+        int sum = IntStream.range(0, uniqueCharactersString.length())
+                .map(i -> Math.toIntExact(hashMapOfSymbols.get(uniqueCharactersString.charAt(i))))
+                .sum();
         return (float) sum / hashMapOfSymbols.size();
     }
 
     @Override
     public String stringOfAverageSymbols(float average) {
         int result = Math.round(average);
-
         StringBuilder builder = new StringBuilder();
-        for (int i = 0; i < uniqueCharactersString.length(); i++) {
-            char symbol = uniqueCharactersString.charAt(i);
-            if (hashMapOfSymbols.get(symbol) == result) {
-                builder.append(symbol);
-            }
-        }
+        IntStream.range(0, uniqueCharactersString.length())
+                .filter(i -> hashMapOfSymbols.get(uniqueCharactersString.charAt(i)) == result)
+                .forEach(index -> builder.append(uniqueCharactersString.charAt(index)));
+
         return toUTF8(String.valueOf(builder));
     }
 
 
     private String toUTF8(String string) {
         StringBuilder stringBuilder = new StringBuilder();
-        for (int i = 0; i < string.length(); i++) {
+        IntStream.range(0, string.length()).forEach(i -> {
             String chr = String.valueOf(string.charAt(i));
             byte[] bytes = chr.getBytes(StandardCharsets.UTF_8);
 
             String utfString = chr + "(" + fromArrayToSting(bytes) + ") ";
             stringBuilder.append(utfString);
-        }
+        });
         return String.valueOf(stringBuilder);
     }
 
